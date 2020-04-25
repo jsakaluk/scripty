@@ -7,9 +7,11 @@
 #' @return a fitted lavaan object
 #' @export
 #' @examples
-#' pim.hs <- pim(df, model = "sum")
+#' pim.hs <- pim(df, model = "average")
 
 pim <- function(df, model = "sum"){
+  #create subdirectory for scripts
+  dir.create("./scripts")
   #Store number of last indicator variable
   last <- length(names(df))
   #Specify a one indicator LV of last variable;
@@ -73,7 +75,7 @@ pim <- function(df, model = "sum"){
   pim.model <- sprintf("#First item loads on latent variable with loading constrained to 1 by default #\n%s\n%s\n\n#All other itmes predict the last item with the same coefficient#\n%s\n\n#constrain the regression coefficient for all items to -1#
 %s\n\n#estimate intercepts of all other items, first item intercept is constrained to 0#\n%s\n\n##All predictor items covary with latent variable##\n%s\n%s", eta, facs, regs, a, ints, cor.1, cors)
   #Concatenate And print stitched together lavaan syntax
-  cat(pim.model,"\n")
+  cat(pim.model,"\n", file = sprintf("./scripts/pim%s.txt",model))
   #Submit to lavaan::sem
   model.fit <- lavaan::sem(pim.model, data=df)
   return(model.fit)

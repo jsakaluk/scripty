@@ -9,6 +9,7 @@
 #' par.hs <- parallel(df)
 
 parallel <- function(df){
+  dir.create("./scripts")
   eta <- sprintf("LV =~")
   lambda.list = list()
   for (i in 1:length(names(df))) {
@@ -23,7 +24,7 @@ parallel <- function(df){
   theta = paste(theta.list, collapse = "\n")
 
   parallel.model <- sprintf("#Loadings\n%s\n\n#Residuals\n%s", lambda, theta)
-  cat(parallel.model,"\n")
+  cat(parallel.model,"\n", file = "./scripts/parallel.txt")
   model.fit <- lavaan::sem(parallel.model, data=df)
   return(model.fit)
 }

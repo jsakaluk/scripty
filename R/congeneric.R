@@ -9,11 +9,12 @@
 #' cong.hs <- congeneric(df)
 
 congeneric <- function(df){
+  dir.create("./scripts")
   eta <- sprintf("LV =~ NA*")
   lambda <- gsub(" ", "",paste(eta,paste(names(df), collapse = "+")), fixed = T)
   psi <- sprintf("LV ~~ 1*LV")
   congeneric.model <- sprintf("#Loadings\n%s\n\n#Variances\n%s", lambda, psi)
-  cat(congeneric.model,"\n")
+  cat(congeneric.model,"\n", file = "./scripts/congeneric.txt")
   model.fit <- lavaan::sem(congeneric.model, data=df)
   return(model.fit)
 }
