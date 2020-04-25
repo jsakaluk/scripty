@@ -25,3 +25,5 @@ Imports:
     rockchalk,
     qgraph,
     magrittr
+URL: https://github.com/jsakaluk/psyscores
+BugReports: https://github.com/jsakaluk/psyscores/issues
