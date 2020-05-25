@@ -19,5 +19,5 @@ This function fits a PIM (Rose et al., 2019), to a set of indicators. Follows an
 coding approach provided by McNeish and Wolf (2020, https://osf.io/7ea3k/)
 }
 \examples{
-pim.hs <- pim(df, model = "sum")
+pim.hs <- pim(df, model = "average")
 }

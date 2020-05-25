@@ -29,8 +29,8 @@ vbplot <- function(df, n, seed=123){
 
     plot <- ggplot()+
       xlim(0,1)+
-      geom_histogram(data = ufm, aes(x = value, fill = "UFM"), alpha = 0.5,position = 'identity')+
-      geom_histogram(data = snm, aes(x = value, fill = "SNM"), alpha = 0.5,position = 'identity')+
+      geom_histogram(data = ufm, aes(x = value, fill = "UFM"), alpha = 0.6,position = 'identity')+
+      geom_histogram(data = snm, aes(x = value, fill = "SNM"), alpha = 0.6,position = 'identity')+
       scale_fill_grey(start = 0.2, end = 0.8) +
       labs(x = "Proportion of Partial Correlations", y= "Number of Simulated Samples", fill="",title=" ")+
       apatheme+

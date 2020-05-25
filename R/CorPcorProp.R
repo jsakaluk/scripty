@@ -90,7 +90,7 @@ CorPcorProp <- function(df, type = "obs", n = NULL, seed = NULL){
       prop[i] <- total_NW/length(U_NW_cor)
     }
 
-    SNM <- as.tibble(prop)
+    SNM <- tibble::as_tibble(prop)
     SNM$model <- "SNM"
     return(SNM)
   }

@@ -30,6 +30,6 @@ reliability <- function(model){
 
   index <- c("H", "Omega Total")
   estimate <- c(H, omega.total)
-  reliability <- tibble::as_tibbleas_tibble(cbind(index, estimate))
+  reliability <- tibble::as_tibble(cbind(index, estimate))
   return(reliability)
 }

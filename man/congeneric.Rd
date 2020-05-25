@@ -14,7 +14,7 @@ a fitted lavaan object
 }
 \description{
 This function fits a congeneric reflective latent variable model (described in McNeish and Wolf, 2020) using the indicators in the specified in the supplied data frame
-and the lavaan function with fixed-factor scaling.
+and the lavaan function with fixed-factor scaling. FIML is used by default.
 }
 \examples{
 cong.hs <- congeneric(df)
