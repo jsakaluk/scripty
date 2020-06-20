@@ -4,7 +4,7 @@
 \alias{congeneric}
 \title{A Function That Fits a Congeneric Reflective Latent Variable Measurement Model to a Set of Variables}
 \usage{
-congeneric(df)
+congeneric(df, lvname)
 }
 \arguments{
 \item{df}{input data frame consisting of variables in the measurement model}

@@ -8,13 +8,13 @@
 #' @examples
 #' cong.hs <- congeneric(df)
 
-congeneric <- function(df){
+congeneric <- function(df, lvname){
   dir.create("./scripts")
-  eta <- sprintf("LV =~ NA*")
+  eta <- sprintf("%s =~ NA*", lvname)
   lambda <- gsub(" ", "",paste(eta,paste(names(df), collapse = "+")), fixed = T)
-  psi <- sprintf("LV ~~ 1*LV")
+  psi <- sprintf("%s ~~ 1*%s", lvname, lvname)
   congeneric.model <- sprintf("#Loadings\n%s\n\n#Variances\n%s", lambda, psi)
-  cat(congeneric.model,"\n", file = "./scripts/congeneric.txt")
+  cat(congeneric.model,"\n", file = sprintf("./scripts/%s.txt", lvname))
   model.fit <- lavaan::sem(congeneric.model, data=df, missing = "ml")
   return(model.fit)
 }
