@@ -4,7 +4,7 @@
 \alias{mimicdif}
 \title{A Function that Conducts a MIMIC model analysis of DIF}
 \usage{
-mimicdif(df, covname, lvname, match.op = FALSE, doubleMC.op = T)
+mimicdif(df, covname, lvname, match.op = FALSE, doubleMC.op = T, cat = FALSE)
 }
 \arguments{
 \item{df}{input data frame consisting of variables in the measurement model}
@@ -16,6 +16,8 @@ mimicdif(df, covname, lvname, match.op = FALSE, doubleMC.op = T)
 \item{match.op}{supplies indprod (default to FALSE)}
 
 \item{doubleMC.op}{supplies inprod (default to TRUE)}
+
+\item{cat}{should a categorical estimator (estimator = "ULSMVS") be used? (default to FALSE)}
 }
 \value{
 terminates with outputting reproducible table from mimicout
