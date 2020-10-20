@@ -36,6 +36,8 @@ get_invareffsize <- function(dat, fit, nodewidth = 0.01, lowerLV = -5, upperLV =
   wudi <- get_wudi(dat, fit)
 
   effsize.tib <- as.data.frame(cbind(indnames, dmacs, sdmacs, sdi2, udi2, wsdi, wudi))
+  effsize.gt <- gt::gt(effsize.tib)
+  gt::gtsave(effsize.gt, sprintf("./output/%s_invarEffSize.rtf", lvname))
 
   return(effsize.tib)
 }

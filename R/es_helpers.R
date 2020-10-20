@@ -40,7 +40,10 @@ nogroup <- function(fit){
 }
 
 #' @rdname es_helpers
-groupindsds <- function(dat, fit, group){
+groupindsds <- function(dat, fit){
+
+  fit.call <- lavInspect(fit, what = "call")
+  fit.call.group <- fit.call$group
 
   gname <- lavaan::lavInspect(fit, what = "group.label")
 
@@ -49,11 +52,11 @@ groupindsds <- function(dat, fit, group){
     dplyr::select(., rhs) %>%
     unique(.)
 
-  sds <- dat %>% group_by(.data[[group]]) %>%
-    dplyr::select(., .data[[group]], matches(indnames$rhs)) %>%
+  sds <- dat %>% group_by(.data[[fit.call.group]]) %>%
+    dplyr::select(., .data[[fit.call.group]], matches(indnames$rhs)) %>%
     dplyr::summarise_all(., sd)
 
-  sds <- sds[match(gname, sds$group),]
+  #sds <- sds[match(gname, sds$group),]
   sds <- sds[-1]
 
   return(sds)
@@ -79,44 +82,46 @@ nogrouploads <- function(nogroupfit){
 }
 
 #' @rdname es_helpers
-groupints <- function(fit, source){
+groupints <- function(fit, source, df){
   if(source == "1"){
-    ints <- dplyr::filter(lavaan::parameterEstimates(fit), op == "~1" & group == 1 & lhs %in% names(dat)) %>%
+    ints <- lavaan::parameterEstimates(fit) %>%
+      dplyr::filter(., op == "~1" & group == 1 & lhs %in% names(df)) %>%
       dplyr::select(., est)
   }else if(source == "2"){
-    ints <- dplyr::filter(lavaan::parameterEstimates(fit), op == "~1" & group == 2 & lhs %in% names(dat)) %>%
+    ints <- lavaan::parameterEstimates(fit) %>%
+      dplyr::filter(., op == "~1" & group == 2 & lhs %in% names(df)) %>%
       dplyr::select(., est)
   }
   return(ints)
 }
 
 #' @rdname es_helpers
-nogroupints <- function(nogroupfit){
-  ints <- dplyr::filter(lavaan::parameterEstimates(nogroupfit), op == "~1" & lhs %in% names(dat)) %>%
+nogroupints <- function(nogroupfit, df){
+  ints <- dplyr::filter(lavaan::parameterEstimates(nogroupfit), op == "~1" & lhs %in% names(df)) %>%
     dplyr::select(., est)
   return(ints)
 }
 
 #' @rdname es_helpers
-grouplvmean <- function(fit, source){
+grouplvmean <- function(fit, source, df){
   if(source == "1"){
-    lvmean <- dplyr::filter(lavaan::parameterEstimates(fit), op == "~1" & group == 1 & !lhs %in% names(dat)) %>%
+    lvmean <- dplyr::filter(lavaan::parameterEstimates(fit), op == "~1" & group == 1 & !lhs %in% names(df)) %>%
       dplyr::select(., est)
   }else if(source == "2"){
-    lvmean <- dplyr::filter(lavaan::parameterEstimates(fit), op == "~1" & group == 2 & !lhs %in% names(dat)) %>%
+    lvmean <- dplyr::filter(lavaan::parameterEstimates(fit), op == "~1" & group == 2 & !lhs %in% names(df)) %>%
       dplyr::select(., est)
   }
 return(lvmean)
 }
 
 #' @rdname es_helpers
-grouplvsd <- function(fit, source){
+grouplvsd <- function(fit, source, df){
   if(source == "1"){
-    lvsd <- dplyr::filter(lavaan::parameterEstimates(fit), op == "~~" & group == 1 & !lhs %in% names(dat) & !rhs %in% names(dat)) %>%
+    lvsd <- dplyr::filter(lavaan::parameterEstimates(fit), op == "~~" & group == 1 & !lhs %in% names(df) & !rhs %in% names(df)) %>%
       dplyr::select(., est) %>%
       sqrt(.)
   }else if(source == "2"){
-    lvsd <- dplyr::filter(lavaan::parameterEstimates(fit), op == "~~" & group == 2 & !lhs %in% names(dat) & !rhs %in% names(dat)) %>%
+    lvsd <- dplyr::filter(lavaan::parameterEstimates(fit), op == "~~" & group == 2 & !lhs %in% names(df) & !rhs %in% names(df)) %>%
       dplyr::select(., est) %>%
       sqrt(.)
   }

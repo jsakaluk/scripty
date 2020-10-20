@@ -42,24 +42,24 @@ get_wsdi <- function(dat, fit, nodewidth = 0.01, lowerLV = -5, upperLV = 5){
   loading2 = load2$est
   loadingS = loadnone$est
 
-  int1 <- groupints(fit, source = "1")
-  int2 <- groupints(fit, source = "2")
-  intnone <- nogroupints(nogroupfit)
+  int1 <- groupints(fit, source = "1", df = dat)
+  int2 <- groupints(fit, source = "2", df = dat)
+  intnone <- nogroupints(nogroupfit, df = dat)
   intercept1 = int1$est
   intercept2 = int2$est
   interceptS = intnone$est
 
-  sds <- groupindsds(dat, fit, group)
+  sds <- groupindsds(dat, fit)
   stdev1 = as.numeric(sds[1,])
   stdev2 = as.numeric(sds[2,])
 
-  intfac1 <- grouplvmean(fit, source = "1")
-  sdfac1 <- grouplvsd(fit, source = "1")
+  intfac1 <- grouplvmean(fit, source = "1", df = dat)
+  sdfac1 <- grouplvsd(fit, source = "1", df = dat)
   fmean1 = intfac1$est
   fsd1 = sdfac1$est
 
-  intfac2 <- grouplvmean(fit, source = "2")
-  sdfac2 <- grouplvsd(fit, source = "2")
+  intfac2 <- grouplvmean(fit, source = "2", df = dat)
+  sdfac2 <- grouplvsd(fit, source = "2", df = dat)
   fmean2 = intfac2$est
   fsd2 = sdfac2$est
 

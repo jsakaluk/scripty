@@ -39,19 +39,19 @@ get_dmacs <- function(dat, fit, nodewidth = 0.01, lowerLV = -5, upperLV = 5){
   loading1 <- load1$est
   loading2 <- load2$est
 
-  int1 <- groupints(fit, source = "1")
-  int2 <- groupints(fit, source = "2")
+  int1 <- groupints(fit, df = dat, source = "1")
+  int2 <- groupints(fit, df = dat, source = "2")
   intercept1 <- int1$est
   intercept2 <- int2$est
 
-  sds <- groupindsds(dat, fit, group)
-  stdev1 = as.numeric(sds[1,])
+  sds <- groupindsds(dat, fit)
+  stdev1  <-  as.numeric(sds[1,])
   stdev2 <- as.numeric(sds[2,])
 
-  intfac2 <- grouplvmean(fit, source = "2")
+  intfac2 <- grouplvmean(fit, source = "2", df = dat)
   fmean2 <- intfac2$est
 
-  sdfac2 <- grouplvsd(fit, source = "2")
+  sdfac2 <- grouplvsd(fit, source = "2", df = dat)
   fsd2 <- sdfac2$est
 
   N1 = gn[[1]]

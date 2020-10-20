@@ -14,30 +14,30 @@
 \usage{
 nogroup(fit)
 
-groupindsds(dat, fit, group)
+groupindsds(dat, fit)
 
 grouploads(fit, source)
 
 nogrouploads(nogroupfit)
 
-groupints(fit, source)
+groupints(fit, source, df)
 
-nogroupints(nogroupfit)
+nogroupints(nogroupfit, df)
 
-grouplvmean(fit, source)
+grouplvmean(fit, source, df)
 
-grouplvsd(fit, source)
+grouplvsd(fit, source, df)
 }
 \arguments{
 \item{fit}{outputted multi-group cfa lavaan object}
 
 \item{dat}{data frame of indicators}
 
-\item{group}{character of grouping variable name in dat}
-
 \item{source}{character for whether parameter of interest should be extracted for group "1", "2", or from the "nogroup" model}
 
 \item{nogroupfit}{outputted cfa lavaan object from nogroup()}
+
+\item{group}{character of grouping variable name in dat}
 }
 \description{
 Helper functions for noninvariance effect size functions
