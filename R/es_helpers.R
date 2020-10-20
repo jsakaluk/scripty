@@ -52,7 +52,7 @@ groupindsds <- function(dat, fit){
     dplyr::select(., rhs) %>%
     unique(.)
 
-  sds <- dat %>% group_by(.data[[fit.call.group]]) %>%
+  sds <- dat %>% dplyr::group_by(.data[[fit.call.group]]) %>%
     dplyr::select(., .data[[fit.call.group]], matches(indnames$rhs)) %>%
     dplyr::summarise_all(., sd)
 
