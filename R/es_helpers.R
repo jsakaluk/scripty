@@ -28,8 +28,8 @@ nogroup <- function(fit){
   nogroup.est <- nogroup.ops$estimator
 
   #Fit same model with no group designation
-  nogroupfit <- lavaan::cfa(eval(sym(nogroup.mod)),
-                            data = eval(sym(nogroup.dat)),
+  nogroupfit <- lavaan::cfa(eval(rlang::sym(nogroup.mod)),
+                            data = eval(rlang::sym(nogroup.dat)),
                             meanstructure = nogroups.meanstruct,
                             std.lv = nogroup.stdlv,
                             auto.fix.first = nogroup.fixfirst,
