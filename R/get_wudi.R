@@ -18,7 +18,7 @@
 
 get_wudi <- function(dat, fit, nodewidth = 0.01, lowerLV = -5, upperLV = 5){
 
-  lcall <- lavInspect(fit, what = "call")
+  lcall <- lavaan::lavInspect(fit, what = "call")
   group <- lcall$group
   #Get indicator names --> # of indicators
   indnames <- lavaan::parameterestimates(fit) %>% #names of indicators

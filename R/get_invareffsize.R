@@ -19,25 +19,37 @@
 #' fit <- lavaan::cfa(HS.model, data = dat, group = "group")
 
 get_invareffsize <- function(dat, fit, nodewidth = 0.01, lowerLV = -5, upperLV = 5, lvname = NULL){
-  dir.create("./output")
 
-  indnames <- lavaan::parameterestimates(fit) %>%
-    dplyr::filter(., op == "=~") %>%
-    dplyr::select(., rhs) %>%
-    unique(.)
+  check_num <- check_invares(fit, type = "lvnum")
+  check_mean <- check_invares(fit, type = "lvmean")
 
-  colnames(indnames) = "Indicators"
+  if(check_num == FALSE & check_mean == TRUE){
+    stop("Invariance effect sizes cannot currently be calculated with models consisting of more than one latent variable")
+  }else if(check_mean == FALSE & check_num == TRUE){
+    stop("Invariance effect sizes cannot be calculated when latent means are equivalent between groups")
+  }else if(check_num == FALSE & check_mean == FALSE){
+    stop("Invariance effect sizes cannot currently be calculated with models consisting of more than one latent variable, when latent means are equivalent between groups")
+  }else if(check_num == TRUE & check_mean == TRUE){
+    dir.create("./output")
 
-  sdmacs <- get_sdmacs(dat, fit)
-  dmacs <- get_dmacs(dat, fit)
-  sdi2 <- get_sdi2(dat, fit)
-  udi2 <- get_udi2(dat, fit)
-  wsdi <- get_wsdi(dat, fit)
-  wudi <- get_wudi(dat, fit)
+    indnames <- lavaan::parameterestimates(fit) %>%
+      dplyr::filter(., op == "=~") %>%
+      dplyr::select(., rhs) %>%
+      unique(.)
 
-  effsize.tib <- as.data.frame(cbind(indnames, dmacs, sdmacs, sdi2, udi2, wsdi, wudi))
-  effsize.gt <- gt::gt(effsize.tib)
-  gt::gtsave(effsize.gt, sprintf("./output/%s_invarEffSize.rtf", lvname))
+    colnames(indnames) = "Indicators"
 
-  return(effsize.tib)
+    sdmacs <- get_sdmacs(dat, fit)
+    dmacs <- get_dmacs(dat, fit)
+    sdi2 <- get_sdi2(dat, fit)
+    udi2 <- get_udi2(dat, fit)
+    wsdi <- get_wsdi(dat, fit)
+    wudi <- get_wudi(dat, fit)
+
+    effsize.tib <- as.data.frame(cbind(indnames, dmacs, sdmacs, sdi2, udi2, wsdi, wudi))
+    effsize.gt <- gt::gt(effsize.tib)
+    gt::gtsave(effsize.gt, sprintf("./output/%s_invarEffSize.rtf", lvname))
+
+    return(effsize.tib)
+  }
 }

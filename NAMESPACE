@@ -2,6 +2,7 @@
 
 export("%>%")
 export(CorPcorProp)
+export(check_invares)
 export(congeneric)
 export(covfilters)
 export(covlevs)
