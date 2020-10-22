@@ -2,6 +2,7 @@
 #'
 #' @param dat data frame of indicators
 #' @param fit outputted multi-group cfa lavaan object
+#' @param model inputted lavaan model syntax
 #' @param nodewidth space between nodes during quadrature approximation (default = .01)
 #' @param lowerLV lowest latent variable value evaluated (default = -5)
 #' @param upperLV greatest latent variable value evaluated (default = 5)
@@ -18,8 +19,11 @@
 #' HS.model <- '  visual =~ x1 + x2 + x3'
 #' fit <- lavaan::cfa(HS.model, data = dat, group = "group")
 
-get_invareffsize <- function(dat, fit, nodewidth = 0.01, lowerLV = -5, upperLV = 5, lvname = NULL){
+get_invareffsize <- function(dat, fit, model, nodewidth = 0.01, lowerLV = -5, upperLV = 5, lvname = NULL){
 
+  if(stringr::str_detect(model, pattern = "(?=\\().+?(?=\\))") == FALSE){
+    cat(crayon::yellow("Warning: For maximum accuracy, we recommend manually specifying your parameter constraints instead of using the group.equal = argument"))
+  }
   check_num <- check_invares(fit, type = "lvnum")
   check_mean <- check_invares(fit, type = "lvmean")
 
@@ -43,8 +47,8 @@ get_invareffsize <- function(dat, fit, nodewidth = 0.01, lowerLV = -5, upperLV =
     dmacs <- get_dmacs(dat, fit)
     sdi2 <- get_sdi2(dat, fit)
     udi2 <- get_udi2(dat, fit)
-    wsdi <- get_wsdi(dat, fit)
-    wudi <- get_wudi(dat, fit)
+    wsdi <- get_wsdi(dat, fit, model)
+    wudi <- get_wudi(dat, fit, model)
 
     effsize.tib <- as.data.frame(cbind(indnames, dmacs, sdmacs, sdi2, udi2, wsdi, wudi))
     effsize.gt <- gt::gt(effsize.tib)

@@ -5,6 +5,7 @@
 #'
 #' @param dat data frame of indicators
 #' @param fit outputted multi-group cfa lavaan object
+#' @param model inputted lavaan model syntax
 #' @param nogroupfit outputted cfa lavaan object from nogroup()
 #' @param group character of grouping variable name in dat
 #' @param source character for whether parameter of interest should be extracted for group "1", "2", or from the "nogroup" model
@@ -12,12 +13,34 @@
 #' @export
 
 #' @rdname es_helpers
-nogroup <- function(fit){
+nogroup <- function(fit, model){
   #extract call from fit
   nogroup.call <- lavaan::lavInspect(fit, what = "call")
-  #extract model syntax and data frame name from call
-  nogroup.mod <- nogroup.call$model
+  #extract data frame name from call
   nogroup.dat <- nogroup.call$data
+
+  #Conditionally extract model syntax from either
+  #the text object, or the modified text object (sans manual constraints)
+  #nogroup.mod <- nogroup.call$model
+
+  if(stringr::str_detect(model, pattern = "(?=\\().+?(?=\\))") == TRUE){
+    #If model contains manual constraints, strip them out from
+    #character object of lavaan syntax
+    rep1 <- stringr::str_replace_all(model,
+                                   pattern = "(?=\\().+?(?=\\))",
+                                   replacement = "")
+
+    rep2 <- stringr::str_replace_all(rep1,
+                            pattern = '\\*',
+                            replacement = "")
+
+    mod <- stringr::str_replace_all(rep2,
+                            pattern = 'c\\)',
+                            replacement = "")
+
+  }else if(str_detect(model, pattern = "(?=\\().+?(?=\\))") == FALSE){
+    mod <-model
+  }
 
   #extract model fitting options from fit
   nogroup.ops <- lavaan::lavInspect(fit, what = "options")
@@ -28,11 +51,11 @@ nogroup <- function(fit){
   nogroup.est <- nogroup.ops$estimator
 
   #Fit same model with no group designation
-  nogroupfit <- lavaan::cfa(eval(rlang::sym(nogroup.mod)),
+  nogroupfit <- lavaan::cfa(mod,
                             data = eval(rlang::sym(nogroup.dat)),
                             meanstructure = nogroups.meanstruct,
                             std.lv = nogroup.stdlv,
-                            auto.fix.first = nogroup.fixfirst,
+                            auto.fix.first = TRUE,
                             missing = nogroup.missing,
                             estimator = nogroup.est)
 

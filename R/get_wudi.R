@@ -2,6 +2,8 @@
 #'
 #' @param dat data frame of indicators
 #' @param fit outputted multi-group cfa lavaan object
+#' @param model inputted lavaan model syntax
+
 #' @param nodewidth space between nodes during quadrature approximation (default = .01)
 #' @param lowerLV lowest latent variable value evaluated (default = -5)
 #' @param upperLV greatest latent variable value evaluated (default = 5)
@@ -16,7 +18,7 @@
 #' HS.model <- '  visual =~ x1 + x2 + x3'
 #' fit <- lavaan::cfa(HS.model, data = dat, group = "group")
 
-get_wudi <- function(dat, fit, nodewidth = 0.01, lowerLV = -5, upperLV = 5){
+get_wudi <- function(dat, fit, model, nodewidth = 0.01, lowerLV = -5, upperLV = 5){
 
   lcall <- lavaan::lavInspect(fit, what = "call")
   group <- lcall$group
@@ -33,7 +35,7 @@ get_wudi <- function(dat, fit, nodewidth = 0.01, lowerLV = -5, upperLV = 5){
   gnum <- length(gname)
   gn <- lavaan::lavInspect(fit, what = "nobs")
 
-  nogroupfit <- nogroup(fit)
+  nogroupfit <- nogroup(fit, model)
 
   load1 <- grouploads(fit, source = "1")
   load2 <- grouploads(fit, source = "2")

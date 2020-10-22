@@ -12,7 +12,7 @@
 \alias{grouplvsd}
 \title{Helper functions for noninvariance effect size functions}
 \usage{
-nogroup(fit)
+nogroup(fit, model)
 
 groupindsds(dat, fit)
 
@@ -30,6 +30,8 @@ grouplvsd(fit, source, df)
 }
 \arguments{
 \item{fit}{outputted multi-group cfa lavaan object}
+
+\item{model}{inputted lavaan model syntax}
 
 \item{dat}{data frame of indicators}
 

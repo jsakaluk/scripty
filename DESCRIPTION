@@ -1,7 +1,7 @@
 Package: psyscores
 Title: psyscores: Psychometric Model Fitting, Scoring, and
     Comparison
-Version: 0.0.0.9006
+Version: 0.0.0.9007
 Authors@R: 
     person(given = "John",
            family = "Sakaluk",

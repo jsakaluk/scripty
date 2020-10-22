@@ -7,6 +7,7 @@
 get_invareffsize(
   dat,
   fit,
+  model,
   nodewidth = 0.01,
   lowerLV = -5,
   upperLV = 5,
@@ -17,6 +18,8 @@ get_invareffsize(
 \item{dat}{data frame of indicators}
 
 \item{fit}{outputted multi-group cfa lavaan object}
+
+\item{model}{inputted lavaan model syntax}
 
 \item{nodewidth}{space between nodes during quadrature approximation (default = .01)}
 
