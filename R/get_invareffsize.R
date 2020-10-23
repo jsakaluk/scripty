@@ -6,8 +6,9 @@
 #' @param nodewidth space between nodes during quadrature approximation (default = .01)
 #' @param lowerLV lowest latent variable value evaluated (default = -5)
 #' @param upperLV greatest latent variable value evaluated (default = 5)
-#' @param table logical argument to request automated outputting of reproducible table (defaults to FALSE)
 #' @param lvname character to name outputted table and file.
+#' @param writeRTF logical argument to request automated outputting of reproducible table (defaults to FALSE)
+
 #'
 #' @return
 #' @export
@@ -19,7 +20,7 @@
 #' HS.model <- '  visual =~ x1 + x2 + x3'
 #' fit <- lavaan::cfa(HS.model, data = dat, group = "group")
 
-get_invareffsize <- function(dat, fit, model, nodewidth = 0.01, lowerLV = -5, upperLV = 5, lvname = NULL){
+get_invareffsize <- function(dat, fit, model, nodewidth = 0.01, lowerLV = -5, upperLV = 5, lvname = NULL, writeRTF = FALSE){
 
   if(stringr::str_detect(model, pattern = "(?=\\().+?(?=\\))") == FALSE){
     cat(crayon::yellow("Warning: For maximum accuracy, we recommend manually specifying your parameter constraints instead of using the group.equal = argument"))
@@ -34,7 +35,6 @@ get_invareffsize <- function(dat, fit, model, nodewidth = 0.01, lowerLV = -5, up
   }else if(check_num == FALSE & check_mean == FALSE){
     stop("Invariance effect sizes cannot currently be calculated with models consisting of more than one latent variable, when latent means are equivalent between groups")
   }else if(check_num == TRUE & check_mean == TRUE){
-    dir.create("./output")
 
     indnames <- lavaan::parameterestimates(fit) %>%
       dplyr::filter(., op == "=~") %>%
@@ -52,7 +52,11 @@ get_invareffsize <- function(dat, fit, model, nodewidth = 0.01, lowerLV = -5, up
 
     effsize.tib <- as.data.frame(cbind(indnames, dmacs, sdmacs, sdi2, udi2, wsdi, wudi))
     effsize.gt <- gt::gt(effsize.tib)
-    gt::gtsave(effsize.gt, sprintf("./output/%s_invarEffSize.rtf", lvname))
+
+    if(writeRTF == TRUE){
+      dir.create("./output")
+      gt::gtsave(effsize.gt, sprintf("./output/%s_invarEffSize.rtf", lvname))
+    }
 
     return(effsize.tib)
   }

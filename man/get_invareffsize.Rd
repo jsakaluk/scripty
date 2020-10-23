@@ -11,7 +11,8 @@ get_invareffsize(
   nodewidth = 0.01,
   lowerLV = -5,
   upperLV = 5,
-  lvname = NULL
+  lvname = NULL,
+  writeRTF = FALSE
 )
 }
 \arguments{
@@ -29,7 +30,7 @@ get_invareffsize(
 
 \item{lvname}{character to name outputted table and file.}
 
-\item{table}{logical argument to request automated outputting of reproducible table (defaults to FALSE)}
+\item{writeRTF}{logical argument to request automated outputting of reproducible table (defaults to FALSE)}
 }
 \value{
 
