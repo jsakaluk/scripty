@@ -1,16 +1,18 @@
-Package: psyscores
-Title: psyscores: Psychometric Model Fitting, Scoring, and
-    Comparison
-Version: 0.0.0.9007
+Package: scripty
+Title: scripty: Automated Syntax Generation of Measurement
+    Models
+Version: 0.0.0.9008
 Authors@R: 
     person(given = "John",
            family = "Sakaluk",
            role = "cre",
            email = "jksakaluk@gmail.com",
            comment = c(ORCID = "0000-0002-2515-9822"))
-Description: Compare Various Psychometric Models for a Set
-    of Indicator Variables and Compute and Appraise Scores According to
-    your Chosen Psychometric Model
+Description: scripty takes simplified inputs as arguments
+    (often just a selection of indicator variables), and automates the
+    writing of model syntax (often for use via lavaan::). Functions are
+    also available to assist with data preparation, model fitting, and
+    reproducible outputting (e.g., tables).
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

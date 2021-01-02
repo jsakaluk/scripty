@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# psyscores
+# scripty
 
 <!-- badges: start -->
 
@@ -11,8 +11,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 status](https://www.r-pkg.org/badges/version/psyscores)](https://CRAN.R-project.org/package=psyscores)
 <!-- badges: end -->
 
-The goal of psyscores is to help automate the specification and
-comparison of different generating psychometric models for indicators of
+The goal of scripty is to help automate the specification and comparison
+of different generating psychometric models for indicators of
 psychological constructs. The package also aims to help researchers
 calculate scores based on their determined psychometric model for use in
 subsequent analyses. This package is very early in its development, so
@@ -25,7 +25,7 @@ You can install the development version from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("jsakaluk/psyscores")
+devtools::install_github("jsakaluk/scripty")
 ```
 
 ## Examples
@@ -33,7 +33,7 @@ devtools::install_github("jsakaluk/psyscores")
 ``` r
 library(dplyr) 
 library(psych)
-library(psyscores)
+library(scripty)
 data(bfi)
 
 #Fit congeneric factor model to bfi agreeableness items
