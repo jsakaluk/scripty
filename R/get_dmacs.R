@@ -13,8 +13,8 @@
 #' dat <- HolzingerSwineford1939
 #' dat$group[dat$school=="Pasteur"] = "Pasteur"
 #' dat$group[dat$school=="Grant-White"] = "Grant-White"
-#' HS.model <- '  visual =~ x1 + x2 + x3'
-#' fit <- lavaan::cfa(HS.model, data = dat, group = "group")
+#' model <- '  visual =~ x1 + x2 + x3'
+#' fit <- lavaan::cfa(model, data = dat, group = "group")
 
 get_dmacs <- function(dat, fit, nodewidth = 0.01, lowerLV = -5, upperLV = 5){
 

@@ -38,7 +38,7 @@ nogroup <- function(fit, model){
                             pattern = 'c\\)',
                             replacement = "")
 
-  }else if(str_detect(model, pattern = "(?=\\().+?(?=\\))") == FALSE){
+  }else if(stringr::str_detect(model, pattern = "(?=\\().+?(?=\\))") == FALSE){
     mod <-model
   }
 
