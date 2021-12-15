@@ -21,23 +21,20 @@ vbplot <- function(df, n, seed=123){
             panel.grid.minor = element_blank(),        #eliminate minor grid lines
             panel.background = element_blank(),        #eliminate the square panel background
             panel.border = element_blank(),            #eliminate the square panel border
-            text=element_text(family="Arial"),         #use arial font
             legend.title=element_blank(),              #eliminate lengend title
             legend.position= "right",                  #position legend to the right of the plot
             axis.line.x = element_line(color="black"), #include a black border along the x-axis
             axis.line.y = element_line(color="black")) #include a black border along the y-axis
 
     plot <- ggplot()+
-      xlim(0,1)+
+      xlim(-.02,1)+
       geom_histogram(data = ufm, aes(x = value, fill = "UFM"), alpha = 0.6,position = 'identity')+
       geom_histogram(data = snm, aes(x = value, fill = "SNM"), alpha = 0.6,position = 'identity')+
+      geom_vline(aes(xintercept = obs, linetype = "Data"))+
       scale_fill_grey(start = 0.2, end = 0.8) +
+      scale_linetype_manual(values = ("dashed"))+
       labs(x = "Proportion of Partial Correlations", y= "Number of Simulated Samples", fill="",title=" ")+
-      apatheme+
-      geom_vline(xintercept = obs, linetype = "dashed")+
-      #annotate(aes(x=propData, label="Observed Proportion", y=1.00), angle=0, nudge_x = .3, size = 4, family="Arial")
-      annotate("segment", xend = (obs+.01), x= (obs+.10), y = 1.00, yend = 1.00, arrow=arrow(length = unit(.1, "inches")))+
-      annotate("text", x=(obs+.37), y=1.00, label="Observed Proportion")
+      apatheme
     plot
 
     return(plot)
